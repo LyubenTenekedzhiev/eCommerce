@@ -1,9 +1,21 @@
 import styled from 'styled-components';
 
+import { device } from './../../media-queries';
+
 export const BasketListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
+  min-height: 550px;
+  width: 100%;
+
+  @media ${device.mobileS} {
+    flex-direction: column;
+  }
+  @media (min-width: 500px) {
+    flex-direction: row;
+  }
 `;
 
 export const BasketHeader = styled.h3`
@@ -15,18 +27,33 @@ export const BasketHeader = styled.h3`
   border: none;
   border-bottom: 1px solid black;
   text-align: center;
+
+  @media ${device.mobileS} {
+    font-size: 1.15rem;
+  }
+  @media ${device.mobileL} {
+    font-size: 1.25rem;
+  }
+  @media ${device.laptop} {
+    font-size: 1.35rem;
+  }
+  @media ${device.desktop} {
+    font-size: 2.5rem;
+  }
 `;
 
 export const BasketInfoText = styled.span`
   display: inline-block;
   margin: 2rem 1rem 1rem 0rem;
-`;
 
-export const BasketLoadingMsg = styled.h3`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: 400;
-  font-size: 2rem;
+  @media ${device.mobileS} {
+    font-size: 0.85rem;
+  }
+  @media ${device.laptop} {
+    font-size: 1rem;
+  }
+  @media ${device.desktop} {
+    font-size: 2rem;
+    margin: 3rem 2rem 3rem 0rem;
+  }
 `;

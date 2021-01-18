@@ -1,16 +1,17 @@
 import React, { ReactElement } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { BasketListWrapper, BasketHeader, BasketInfoText, BasketLoadingMsg } from './BasketPageStyles';
+import { BasketListWrapper, BasketHeader, BasketInfoText } from './BasketPageStyles';
 import { getBasketAPI, removeFromBasketAPI } from '../../api/basket-api';
 import { ProductInterface } from '../../interfaces/product';
 import { basketState } from '../../state/basket-state';
 import Product from '../Product/Product';
+import LoadingMsg from '../UI/LoadingMsg/LoadingMsg';
 
 function BasketPage(): ReactElement {
   const [itemsInBasket, setItemsInBasket] = useRecoilState<any>(basketState);
 
-  if (!itemsInBasket.items || itemsInBasket.items.length === 0) return <BasketLoadingMsg>No Items In Basket</BasketLoadingMsg>;
+  if (!itemsInBasket.items || itemsInBasket.items.length === 0) return <LoadingMsg>No Items In Basket</LoadingMsg>;
 
   return (
     <div>

@@ -2,6 +2,8 @@ import React, { ReactElement, useState, useEffect, useCallback } from 'react';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 
 import Product from '../Product/Product';
+import Button from '../UI/Button/Button';
+import LoadingMsg from '../UI/LoadingMsg/LoadingMsg';
 import { ProductInterface } from '../../interfaces/product';
 import { getBasketAPI, addToBasketAPI } from '../../api/basket-api';
 import { addToWishlistAPI, getWishlistAPI, removeFromWishlistAPI } from '../../api/wishlist-api';
@@ -10,13 +12,11 @@ import { basketState } from '../../state/basket-state';
 import { productsState } from '../../state/products-state';
 import { wishlistState } from '../../state/wishlist-state';
 import {
-  PageButtonNext,
   ProductsListWrapper,
   ProductsPageWrapper,
-  PageButtonPrev,
   ProductsNavigation,
   ProductsNavButton,
-  ProductsLoadingMsg,
+  PaginationButtonsWrapper,
 } from './ProductsPageStyles';
 
 function ProductsPage(): ReactElement {
@@ -88,35 +88,33 @@ function ProductsPage(): ReactElement {
         </ProductsNavButton>
       </ProductsNavigation>
       {tabsState === 'products' ? (
-        <ProductsListWrapper>
+        <>
           {products.length === 0 ? (
-            <ProductsLoadingMsg>No products yet</ProductsLoadingMsg>
+            <LoadingMsg>No products yet</LoadingMsg>
           ) : (
             <>
-              <PageButtonPrev onClick={() => prevPageClickHandler(itemsPerPage, firstProduct, setFirstProduct)}>&lt;</PageButtonPrev>
-              {productsList}
-              <PageButtonNext onClick={() => nextPageClickHandler(products, itemsPerPage, firstProduct, setFirstProduct)}>
-                &gt;
-              </PageButtonNext>
+              <ProductsListWrapper>{productsList}</ProductsListWrapper>
+              <PaginationButtonsWrapper>
+                <Button clicked={() => prevPageClickHandler(itemsPerPage, firstProduct, setFirstProduct)}>Previous</Button>
+                <Button clicked={() => nextPageClickHandler(products, itemsPerPage, firstProduct, setFirstProduct)}>Next</Button>
+              </PaginationButtonsWrapper>
             </>
           )}
-        </ProductsListWrapper>
+        </>
       ) : (
-        <ProductsListWrapper>
+        <>
           {!wishList || wishList.length === 0 ? (
-            <ProductsLoadingMsg>No products in wishlist</ProductsLoadingMsg>
+            <LoadingMsg>No products in wishlist</LoadingMsg>
           ) : (
             <>
-              <PageButtonPrev onClick={() => prevPageClickHandler(itemsPerPage, firstWishlistItem, setFirstWishlistItem)}>
-                &lt;
-              </PageButtonPrev>
-              {wishListProducts}
-              <PageButtonNext onClick={() => nextPageClickHandler(wishList, itemsPerPage, firstWishlistItem, setFirstWishlistItem)}>
-                &gt;
-              </PageButtonNext>
+              <ProductsListWrapper>{wishListProducts}</ProductsListWrapper>
+              <PaginationButtonsWrapper>
+                <Button clicked={() => prevPageClickHandler(itemsPerPage, firstWishlistItem, setFirstWishlistItem)}>Previous</Button>
+                <Button clicked={() => nextPageClickHandler(wishList, itemsPerPage, firstWishlistItem, setFirstWishlistItem)}>Next</Button>
+              </PaginationButtonsWrapper>
             </>
           )}
-        </ProductsListWrapper>
+        </>
       )}
     </ProductsPageWrapper>
   );
